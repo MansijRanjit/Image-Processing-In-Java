@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Lab2 
+public class IPPRLab2 
 {
 	public static void main(String[] args)
 	{

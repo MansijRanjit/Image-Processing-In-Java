@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.util.Arrays;
-public class ConvertToGray
+public class IPPRLab1
 {
 	public static void main(String[] args)
 	{
