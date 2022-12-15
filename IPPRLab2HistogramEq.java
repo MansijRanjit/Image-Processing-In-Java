@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class IPPRLab2 
+public class IPPRLab2HistogramEq 
 {
 	public static void main(String[] args)
 	{
@@ -27,15 +27,15 @@ public class IPPRLab2
 		}
 		
 		int[][] g=getpixel(image);	
-		int[] r =converttoOneDArray(g);
-		int[] n=occourenceCount(r);
+		int[] n=occourenceCount(g);
 		int imgSize=g.length*g[0].length;
 		double[] p=probability(n,imgSize);
 		double[] s=histogramEq(p);
 		
 		int[][] w=getpixelcompintensity(g,s);
 		BufferedImage k =getBIfromarray(w);
-	    displayimage(k);
+	    displayimage(k,"Output");
+	    displayimage(image,"Input");
 		
 		
 
@@ -58,45 +58,25 @@ public class IPPRLab2
 		}
 		return f;
 	}
-	static int[] converttoOneDArray(int[][] f)
-	{
-		int count=f.length*f[0].length;
-		int[] arr=new int[count];
-		int i=0;
-		for(int x=0;x<f.length;x++)
-		{
-			for(int y=0;y<f[0].length;y++)
-			{	
-				
-				if(i<count)
-				{
-					arr[i]=f[x][y];
-				}
-				i++;
-			
-			}
-		}
-		return arr;
-	}
-	static int[] occourenceCount(int[] r)
+	
+	static int[] occourenceCount(int[][] r)
 	{
 		int[] o= new int[256];
 		int count=0;
 		
-		for(int i=0;i<256;i++)
+		for(int x=0;x<r.length;x++)
 		{
-			int x=r[i];
-			for(int j=0;j<256;j++)
+			for(int y=0;y<r[0].length;y++)
 			{
-				
-				if(r[j]==x)
-				{
-					count++;
-				}
+				o[r[x][y]]++;
 			}
-			o[x]=count;
-			count=0;
+			
 		}
+		/*for(int i=0;i<256;i++)
+		{
+			System.out.println(o[i]);
+		}*/
+		
 		return o;
 	}
 	
@@ -106,9 +86,9 @@ public class IPPRLab2
 		
 		for(int i=0;i<256;i++)
 		{
-			p[i]=n[i]/(imgSize);
+			p[i]=(double) n[i]/imgSize;
 		}
-		return p;
+		return p;	
 	}
 	
 	static double[] histogramEq(double[] p)
@@ -142,18 +122,6 @@ public class IPPRLab2
 		return img;
 			
 	}
-	static void displayimage(BufferedImage bi)
-	{
-		ImageIcon icon =new ImageIcon(bi);
-		JFrame frame =new JFrame();
-		frame.setLayout(new FlowLayout());
-		frame.setSize(400,400);
-		JLabel lbl =new JLabel();
-		lbl.setIcon(icon);
-		frame.add(lbl);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
 	
 	static int[][] getpixelcompintensity(int[][] f,double[] m)
 	{
@@ -169,6 +137,21 @@ public class IPPRLab2
 		}
 		return f;
 	}
+	
+	static void displayimage(BufferedImage bi,String text)
+	{
+		ImageIcon icon =new ImageIcon(bi);
+		JFrame frame =new JFrame(text);
+		frame.setLayout(new FlowLayout());
+		frame.setSize(400,400);
+		JLabel lbl =new JLabel();
+		lbl.setIcon(icon);
+		frame.add(lbl);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	
 	
 
 }
