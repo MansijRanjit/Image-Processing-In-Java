@@ -10,16 +10,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Lab3 
+public class Lab3Qn2
 {
 	public static void main(String[] args)
 	{
-		BufferedImage image;
+		BufferedImage image,OrgImage;
 		try
 		{
-			image=ImageIO.read(new File("E:\\7th Semester\\IPPR\\stop.png"));
+			OrgImage=ImageIO.read(new File("E:\\7th Semester\\IPPR\\IPPR Lab Images\\messi.jpg"));
+			image=ImageIO.read(new File("E:\\7th Semester\\IPPR\\IPPR Lab Images\\messi_N.jpg"));
 			System.out.println("Reading Complete.");
-			
 		}
 		catch(IOException e)
 		{
@@ -27,12 +27,17 @@ public class Lab3
 			return;
 		}
 		
-		int[][] g=getpixel(image);		
-		int[][] median=getmedian(g,3);
-	    BufferedImage k =getBIfromarray(median);
-	    displayimage(k);
+		int[][] g=getpixel(OrgImage);	
+		int[][] h=getpixel(image);	
 
-
+		int[][] median=getmedian(h,3);
+		int[][] mean=getmean(h,3);
+		
+		double SNR_Median=getsnr(g,median);
+		double SNR_Mean=getsnr(g,mean);
+		
+		System.out.println("SNR using Median Filter:"+SNR_Median);
+		System.out.println("SNR using Mean Filter  :"+SNR_Mean);
 
 
 	}
@@ -83,33 +88,48 @@ public class Lab3
 		return h;
 	}
 	
-	static BufferedImage getBIfromarray(int[][] f)
+	
+	static int[][] getmean(int[][] f,int size)
 	{
-		BufferedImage img =new BufferedImage(f.length,f[0].length,BufferedImage.TYPE_BYTE_GRAY);
+		int[][] h=new int[f.length][f[0].length];
+		int a=size/2;
 		
-		for(int x=0;x<f.length;x++)
+		for(int x=a;x<f.length-a;x++)
 		{
-			for(int y=0;y<f[0].length;y++)
+			for(int y=a;y<f[0].length-a;y++)
 			{
-				Color newCol =new Color(f[x][y],f[x][y],f[x][y]);
-				img.setRGB(x,y,newCol.getRGB());
+				int count=0;
+				int sum=0;
+				
+				for(int u=x-a;u<=x+a;u++)
+				{
+					for(int v=y-a;v<=y+a;v++)
+					{
+						sum+=f[u][v];
+						
+					}
+				}
+				
+				h[x][y] =(sum/(size*size));
 				
 			}
 		}
-		return img;		
+		return h;
 	}
 	
-	static void displayimage(BufferedImage bi)
+	static double getsnr(int[][] g,int[][] m)
 	{
-		ImageIcon icon =new ImageIcon(bi);
-		JFrame frame =new JFrame();
-		frame.setLayout(new FlowLayout());
-		frame.setSize(400,400);
-		JLabel lbl =new JLabel();
-		lbl.setIcon(icon);
-		frame.add(lbl);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		int signalStrength=0,signalNoise=0;
+		for(int x=0;x<g.length;x++)
+		{
+			for(int y=0;y<g[0].length;y++)
+			{
+				signalStrength+=Math.pow(m[x][y],2);
+				signalNoise+=Math.pow((g[x][y]-m[x][y]),2);
+			}
+		}
+		return (signalStrength/signalNoise);
 	}
+	
 
 }
