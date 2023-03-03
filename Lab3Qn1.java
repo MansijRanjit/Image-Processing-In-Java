@@ -38,11 +38,11 @@ public class Lab3Qn1
 		BufferedImage k_mean =getBIfromarray(mean);
 	    BufferedImage k_median =getBIfromarray(median);
 	    
-	    displayimage(image2,"noisy image");
-	    displayimage(k_mean,"mean_filter");
+	    displayimage(image2,"noisy image2");
+	    displayimage(k_median,"median_filter2");
 	    
-	    displayimage(image1,"noisy_image");
-	    displayimage(k_median,"median_filter");
+	    displayimage(image1,"noisy_image1");
+	    displayimage(k_mean,"mean_filter1");
 
 	}
 	static int[][] getpixel(BufferedImage image)
@@ -139,7 +139,7 @@ public class Lab3Qn1
 	static void displayimage(BufferedImage bi,String label)
 	{
 		ImageIcon icon =new ImageIcon(bi);
-		JFrame frame =new JFrame();
+		JFrame frame =new JFrame(label);
 		frame.setLayout(new FlowLayout());
 		frame.setSize(800,800);
 		JLabel lbl =new JLabel(label);

@@ -76,7 +76,7 @@ public class IPPRLab1
 	    */
 	    
 	    //get intensity value 0 if<128 else 256
-		  /*
+		 /* 
 	      int[][] h=getpixelcompintensity(g,128);
 		  BufferedImage k =getBIfromarray(h);
 	      displayimage(k);
@@ -89,8 +89,8 @@ public class IPPRLab1
 
 	    BufferedImage k =getBIfromarray(w);
 	    displayimage(k);
-        
-		*/
+        */
+		
 		 //get intensity value 0 if<median else 256
 		
 		int median=getmedian(g);
@@ -98,7 +98,7 @@ public class IPPRLab1
 
 	    BufferedImage k =getBIfromarray(w);
 	    displayimage(k);
-					
+				
 	}
 	static int[][] getpixel(BufferedImage image)
 	{
